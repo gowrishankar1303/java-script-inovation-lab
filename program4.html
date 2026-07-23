@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        label {
+            display: inline-block;
+            width: 130px;
+        }
+
+        input {
+            padding: 5px;
+            width: 220px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-left: 130px;
+        }
+
+        button {
+            padding: 8px 20px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="registrationForm" onsubmit="return validateForm()">
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <div id="nameError" class="error"></div>
+
+    <br><br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <div id="emailError" class="error"></div>
+
+    <br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <div id="passwordError" class="error"></div>
+
+    <br><br>
+
+    <label for="contactNumber">Contact Number:</label>
+    <input type="tel" id="contactNumber" name="contactNumber">
+    <div id="contactNumberError" class="error"></div>
+
+    <br>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+<script>
+
+function validateName(name) {
+    const regex = /^[A-Za-z ]+$/;
+
+    if (name.trim() === "") {
+        return "Name cannot be empty.";
+    }
+
+    if (!regex.test(name)) {
+        return "Name should contain only letters.";
+    }
+
+    return "";
+}
+
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email.trim() === "") {
+        return "Email cannot be empty.";
+    }
+
+    if (!regex.test(email)) {
+        return "Invalid email format.";
+    }
+
+    return "";
+}
+
+function validatePassword(password) {
+    const regex = /^(?=.[A-Z])(?=.\d).{8,}$/;
+
+    if (password.trim() === "") {
+        return "Password cannot be empty.";
+    }
+
+    if (!regex.test(password)) {
+        return "Password must be at least 8 characters, contain one uppercase letter and one number.";
+    }
+
+    return "";
+}
+
+function validatePhone(phone) {
+    const regex = /^[0-9]{10}$/;
+
+    if (phone.trim() === "") {
+        return "Phone number cannot be empty.";
+    }
+
+    if (!regex.test(phone)) {
+        return "Phone number must contain exactly 10 digits.";
+    }
+
+    return "";
+}
+
+function validateForm() {
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const phone = document.getElementById("contactNumber").value;
+
+    const nameError = validateName(name);
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+    const phoneError = validatePhone(phone);
+
+    document.getElementById("nameError").innerText = nameError;
+    document.getElementById("emailError").innerText = emailError;
+    document.getElementById("passwordError").innerText = passwordError;
+    document.getElementById("contactNumberError").innerText = phoneError;
+
+    if (nameError || emailError || passwordError || phoneError) {
+        return false;
+    }
+
+    alert("Registration Successful!");
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
